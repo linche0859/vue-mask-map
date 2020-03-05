@@ -14,7 +14,7 @@
       <div class="select-item">
         <el-select
           v-model="selected.city"
-          @change="changeCityHandler"
+          @change="getSelectCountiesHandler"
           placeholder="請選擇">
           <el-option
             v-for="city in select.cities"
@@ -27,7 +27,7 @@
       <div class="select-item">
         <el-select
           v-model="selected.county"
-          @change="getPharmacyListHandler"
+          @change="changeCountyHandler"
           placeholder="請選擇">
           <el-option
             v-for="county in select.counties"

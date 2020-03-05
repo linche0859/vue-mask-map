@@ -105,13 +105,15 @@ export default {
       const area = this.cityCountyList.find(city => city.CityName === cityName);
       this.select.counties = area.AreaList;
       this.selected.county = area.AreaList[0].AreaName;
+      this.input.searchAddress = '';
       this.getPharmacyListHandler();
     },
     /**
-     * 切換城市事件
+     * 切換鄉鎮事件
      */
-    changeCityHandler(cityName) {
-      this.getSelectCountiesHandler(cityName);
+    changeCountyHandler() {
+      this.input.searchAddress = '';
+      this.getPharmacyListHandler();
     },
     /**
      * 取得藥局列表
