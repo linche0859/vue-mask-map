@@ -105,8 +105,7 @@ export default {
       const area = this.cityCountyList.find(city => city.CityName === cityName);
       this.select.counties = area.AreaList;
       this.selected.county = area.AreaList[0].AreaName;
-      this.input.searchAddress = '';
-      this.getPharmacyListHandler();
+      this.changeCountyHandler();
     },
     /**
      * 切換鄉鎮事件

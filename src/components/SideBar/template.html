@@ -39,7 +39,8 @@
       </div>
     </div>
     <el-input
-      placeholder="搜尋地址...""
+      placeholder="搜尋地址..."
+      @enter="getPharmacyListHandler"
       v-model="input.searchAddress">
       <i
         class="el-icon-search el-input__icon"
