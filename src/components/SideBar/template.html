@@ -1,0 +1,76 @@
+<div class="side-bar">
+  <input type="checkbox" id="side-bar-switch" v-model="sideBarSwitch" />
+  <form>
+    <h2>
+      <p>{{ date.week }}</p>
+      <p>{{ date.completeDate }}</p>
+    </h2>
+    <div class="purchase-info">
+      身分證末碼為
+      <span>{{ idCardLastNumber }}</span>
+      可購買
+    </div>
+    <div class="select-group">
+      <div class="select-item">
+        <el-select
+          v-model="selected.city"
+          @change="changeCityHandler"
+          placeholder="請選擇">
+          <el-option
+            v-for="city in select.cities"
+            :key="city.CityName"
+            :label="city.CityName"
+            :value="city.CityName">
+          </el-option>
+        </el-select>
+      </div>
+      <div class="select-item">
+        <el-select
+          v-model="selected.county"
+          @change="getPharmacyListHandler"
+          placeholder="請選擇">
+          <el-option
+            v-for="county in select.counties"
+            :key="county.AreaName"
+            :label="county.AreaName"
+            :value="county.AreaName">
+          </el-option>
+        </el-select>
+      </div>
+    </div>
+    <el-input
+      placeholder="搜尋地址...""
+      v-model="input.searchAddress">
+      <i
+        class="el-icon-search el-input__icon"
+        slot="suffix"
+        @click="getPharmacyListHandler">
+      </i>
+    </el-input>
+  </form>
+  <ul class="nav">
+    <li v-for="{properties} in pharmacyList" :key="properties.id">
+      <div>
+        <h3>{{ properties.name }}</h3>
+        <div class="address">{{ properties.address }}</div>
+        <div class="telephone">{{ properties.phone }}</div>
+        <div class="info">{{ properties.note }}</div>
+        <div class="mask">
+          <a
+            href="javascript:;"
+            :class="['adult', {empty: !!!properties.mask_adult}]">
+          成人口罩 {{ properties.mask_adult }}
+          </a>
+          <a
+            href="javascript:;"
+            :class="['child', {empty: !!!properties.mask_child}]">
+            兒童口罩 {{ properties.mask_child }}
+          </a>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <label for="side-bar-switch" class="drawer">
+    <i class="fas fa-angle-right"></i>
+  </label>
+</div>
