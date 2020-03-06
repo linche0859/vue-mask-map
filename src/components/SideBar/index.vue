@@ -51,9 +51,7 @@ export default {
   },
   watch: {
     sideBarSwitch(val) {
-      const sideBar = document.querySelector('.side-bar');
-      const left = this.userDeviceWidth > 768 ? '-350px' : '-300px';
-      sideBar.style.left = `${val ? left : '0'}`;
+      this.changeSideBarPosition(val);
     }
   },
   created() {
@@ -110,26 +108,26 @@ export default {
       });
       const defaultCity = this.select.cities[0].CityName;
       this.selected.city = defaultCity;
-      this.getSelectCountiesHandler(defaultCity);
+      this.getCountiesHandler(defaultCity);
     },
     /**
      * 取得選擇城市後的鄉鎮列表
      */
-    getSelectCountiesHandler(cityName) {
+    getCountiesHandler(cityName) {
       const area = this.cityCountyList.find(city => city.CityName === cityName);
       this.select.counties = area.AreaList;
       this.selected.county = area.AreaList[0].AreaName;
-      this.changeCountyHandler();
+      this.resetSearchAddressHandler();
     },
     /**
-     * 切換鄉鎮事件
+     * 重置搜尋地址事件
      */
-    changeCountyHandler() {
+    resetSearchAddressHandler() {
       this.input.searchAddress = '';
       this.getPharmacyListHandler();
     },
     /**
-     * 取得藥局列表
+     * 取得地區的藥局資料
      */
     getPharmacyListHandler() {
       this.pharmacyList = this.$store.getters['pharmacies/getAreaPharmacies']({
@@ -137,18 +135,58 @@ export default {
         town: this.selected.county,
         address: this.input.searchAddress
       });
-      if (this.pharmacyList.length === 0) {
+      this.setAreaPharmacies(this.pharmacyList);
+    },
+    /**
+     * 選擇城市事件
+     */
+    changeCityHandler(cityName) {
+      this.getCountiesHandler(cityName);
+      this.getDefaultPharmacy();
+    },
+    /**
+     * 選擇鄉鎮事件
+     */
+    changeCountyHandler() {
+      this.resetSearchAddressHandler();
+      this.getDefaultPharmacy();
+    },
+    /**
+     * 輸入查詢地址事件
+     */
+    changeSearchAddressHandler() {
+      this.getPharmacyListHandler();
+      this.getDefaultPharmacy();
+    },
+    /**
+     * 取得預設的藥房
+     * @param {number} lat 藥房緯度
+     * @param {number} lng 藥房經度
+     */
+    getDefaultPharmacy(lat = 0, lng = 0) {
+      if (!this.pharmacyList.length) {
         this.$message({
           message: '查無資料喔',
           type: 'warning'
         });
         return;
       }
-      // 藥房的經緯度
-      const lat = this.pharmacyList[0].geometry.coordinates[1];
-      const lng = this.pharmacyList[0].geometry.coordinates[0];
+      if (!lat && !lng) {
+        lat = this.pharmacyList[0].geometry.coordinates[1];
+        lng = this.pharmacyList[0].geometry.coordinates[0];
+      }
+      if (this.userDeviceWidth <= 768) this.sideBarSwitch = true;
       markerOpen(this.markers, lat, lng);
-      this.setAreaPharmacies(this.pharmacyList);
+    },
+    /**
+     * 切換側邊攔位置
+     * @param {boolean} status 開閉狀態
+     */
+    changeSideBarPosition(status = true) {
+      const sideBar = document.querySelector('.side-bar');
+      const left = '-300px';
+      // const left = this.userDeviceWidth > 768 ? '-350px' : '-300px';
+      sideBar.style.left = `${status ? left : '0'}`;
     }
   }
 };

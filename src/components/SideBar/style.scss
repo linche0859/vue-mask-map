@@ -52,6 +52,9 @@
     li {
       padding: 10px;
       border-bottom: 1px solid #aaa;
+      &:hover {
+        cursor: pointer;
+      }
       .mask {
         display: flex;
         justify-content: space-between;
@@ -109,8 +112,8 @@
   }
 }
 
-@media screen and (min-width: 768px) {
-  .side-bar {
-    width: 350px;
-  }
-}
+// @media screen and (min-width: 768px) {
+//   .side-bar {
+//     width: 350px;
+//   }
+// }

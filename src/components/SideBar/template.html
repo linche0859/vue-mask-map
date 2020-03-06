@@ -14,7 +14,7 @@
       <div class="select-item">
         <el-select
           v-model="selected.city"
-          @change="getSelectCountiesHandler"
+          @change="changeCityHandler"
           placeholder="請選擇">
           <el-option
             v-for="city in select.cities"
@@ -40,7 +40,7 @@
     </div>
     <el-input
       placeholder="搜尋地址..."
-      @change="getPharmacyListHandler"
+      @change="changeSearchAddressHandler"
       v-model="input.searchAddress">
       <i
         class="el-icon-search el-input__icon"
@@ -50,7 +50,11 @@
     </el-input>
   </form>
   <ul class="nav">
-    <li v-for="{properties} in pharmacyList" :key="properties.id">
+    <li
+      v-for="{properties, geometry} in pharmacyList"
+      :key="properties.id"
+      @click="getDefaultPharmacy(geometry.coordinates[1], geometry.coordinates[0])"
+    >
       <div>
         <h3>{{ properties.name }}</h3>
         <div class="address">{{ properties.address }}</div>

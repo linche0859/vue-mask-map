@@ -56,5 +56,52 @@ export default {
 .home {
   width: 100%;
   height: 100%;
+  /** 地圖 popup */
+  /deep/ .marker-card {
+    box-sizing: border-box;
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      a {
+        font-size: 1.2rem;
+        text-decoration: none;
+        margin-right: 20px;
+      }
+    }
+    section {
+      font-size: .8rem;
+      > div {
+        & + div {
+          margin-top: 5px;
+        }
+      }
+      .mask {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        div {
+          text-align: center;
+          color: #fff;
+          padding: 5px 10px;
+          border-radius: 120px;
+          width: 38%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .adult {
+          background-color: #0af;
+        }
+        .child {
+          background-color: #fa0;
+        }
+        .empty {
+          background-color: #666;
+        }
+      }
+    }
+  }
 }
 </style>
