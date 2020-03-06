@@ -2,13 +2,15 @@ import { apiGetPharmacies } from '@/api/pharmacies.js';
 import { Message } from 'element-ui';
 
 export const state = {
-  // 藥房列表
-  pharmacyList: []
+  // 全部藥房列表
+  pharmacyList: [],
+  // 地區的藥房
+  areaPharmacies: []
 };
 
 export const getters = {
-  // 地區的藥房
-  areaPharmacies: (state) => ({ county = '', town = '', address = '' }) => {
+  // 取得地區的藥房
+  getAreaPharmacies: (state) => ({ county = '', town = '', address = '' }) => {
     let searchRegex = null;
     // 取代「臺」字為「台」字
     county = county.replace(/臺/gi, '台');
@@ -24,6 +26,12 @@ export const getters = {
     return state.pharmacyList.filter(pharmacy => {
       return pharmacy.properties.address.match(regex);
     });
+  },
+  // 全部的藥房
+  allPharmacies: state => state.pharmacyList,
+  // 地區的藥房
+  areaPharmacies: state => {
+    return state.areaPharmacies;
   }
 };
 
@@ -49,6 +57,10 @@ export const actions = {
         })
         .finally(() => resolve());
     });
+  },
+  // 設定地區的藥房
+  setAreaPharmacies({ commit }, data) {
+    commit('SET_AREA_PHARMACIES', data);
   }
 };
 
@@ -56,5 +68,9 @@ export const mutations = {
   // 設定藥房列表
   SET_PHARMACIES(state, data = []) {
     state.pharmacyList = data;
+  },
+  // 設定地區的藥房
+  SET_AREA_PHARMACIES(state, data = []) {
+    state.areaPharmacies = data;
   }
 };

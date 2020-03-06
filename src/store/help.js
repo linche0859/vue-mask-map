@@ -3,7 +3,8 @@ import { mapGetters, mapActions } from 'vuex';
 
 // 藥房的 computed 屬性
 export const pharmaciesComputed = {
-  ...mapGetters('pharmacies', ['areaPharmacies'])
+  ...mapGetters('pharmacies', ['allPharmacies', 'areaPharmacies'])
 };
 
-export const pharmaciesMethods = mapActions('pharmacies', ['getPharmacies']);
+// 藥房的 methods 屬性
+export const pharmaciesMethods = mapActions('pharmacies', ['getPharmacies', 'setAreaPharmacies']);

@@ -5,6 +5,7 @@
   flex-direction: column;
   position: absolute;
   box-shadow: 0 0 20px #aaa;
+  z-index: 1001;
   // transform: translateX(100%);
   transition: 0.3s;
   form {
@@ -45,7 +46,8 @@
   }
   .nav {
     background-image: linear-gradient(0deg, #f9fbfc, #f6f8fa);
-    max-height: calc(100vh - 50px);
+    height: calc(100vh - 180px);
+    max-height: calc(100vh - 180px);
     overflow: auto;
     li {
       padding: 10px;

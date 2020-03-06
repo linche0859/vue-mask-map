@@ -1,11 +1,18 @@
 <script>
 import { apiGetCityCounty } from '@/api/cityCounty.js';
-// import { pharmaciesMethods } from '@/store/help.js';
+import { pharmaciesMethods } from '@/store/help.js';
+import markerOpen from '@/utils/markerOpen.js';
 
 export default {
   name: 'SideBar',
   components: {},
-  props: {},
+  props: {
+    markers: {
+      type: Object,
+      default: () => {},
+      required: true
+    }
+  },
   data() {
     return {
       // 使用者裝置解析度
@@ -63,16 +70,23 @@ export default {
     this.date.completeDate = `${year}-${month}-${day}`;
     let i = 0;
     const lastNumbers = [];
-    while (i < 10) {
-      const remainder = date.getDay() % 2;
-      i % 2 === remainder && lastNumbers.push(i);
-      i++;
+    if (date.getDay() === 0) lastNumbers.push('不限制');
+    else {
+      while (i < 10) {
+        const remainder = date.getDay() % 2;
+        // 0 為偶數的處理方式
+        if (i === 0) {
+          remainder === 0 && lastNumbers.push(i);
+        }
+        i % 2 === remainder && lastNumbers.push(i);
+        i++;
+      }
     }
     this.idCardLastNumber = lastNumbers.toString();
   },
   methods: {
     // actions of store
-    // ...pharmaciesMethods,
+    ...pharmaciesMethods,
     /**
      * 取得城市鄉鎮資料
      */
@@ -118,11 +132,23 @@ export default {
      * 取得藥局列表
      */
     getPharmacyListHandler() {
-      this.pharmacyList = this.$store.getters['pharmacies/areaPharmacies']({
+      this.pharmacyList = this.$store.getters['pharmacies/getAreaPharmacies']({
         county: this.selected.city,
         town: this.selected.county,
         address: this.input.searchAddress
       });
+      if (this.pharmacyList.length === 0) {
+        this.$message({
+          message: '查無資料喔',
+          type: 'warning'
+        });
+        return;
+      }
+      // 藥房的經緯度
+      const lat = this.pharmacyList[0].geometry.coordinates[1];
+      const lng = this.pharmacyList[0].geometry.coordinates[0];
+      markerOpen(this.markers, lat, lng);
+      this.setAreaPharmacies(this.pharmacyList);
     }
   }
 };
