@@ -63,7 +63,7 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       a {
         font-size: 1.2rem;
         text-decoration: none;
