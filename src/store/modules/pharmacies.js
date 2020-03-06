@@ -1,5 +1,5 @@
 import { apiGetPharmacies } from '@/api/pharmacies.js';
-import { Message } from 'element-ui';
+import { Message, Loading } from 'element-ui';
 
 export const state = {
   // 全部藥房列表
@@ -45,8 +45,15 @@ export const actions = {
   // 取得藥房列表
   getPharmacies({ commit }) {
     return new Promise(resolve => {
+      const loading = Loading.service({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
       apiGetPharmacies()
         .then(res => {
+          loading.close();
           commit('SET_PHARMACIES', res.features);
         })
         .catch(() => {
