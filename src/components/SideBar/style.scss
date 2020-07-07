@@ -63,12 +63,15 @@
         justify-content: space-between;
         margin-top: 5px;
         a {
-          text-decoration: none;
-          text-align: center;
-          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           padding: 5px 10px;
-          border-radius: 120px;
           width: 40%;
+          text-align: center;
+          text-decoration: none;
+          border-radius: 120px;
+          color: #fff;
         }
         .adult {
           background-color: #0af;

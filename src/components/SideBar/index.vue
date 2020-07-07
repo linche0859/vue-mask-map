@@ -58,11 +58,15 @@ export default {
     this.getCityCountyHandler();
   },
   mounted() {
-    this.userDeviceWidth = window.innerWidth > 0 ? window.innerWidth : screen.width;
+    this.userDeviceWidth =
+      window.innerWidth > 0 ? window.innerWidth : screen.width;
     const date = new Date();
     const weeks = ['日', '一', '二', '三', '四', '五', '六'];
     const year = date.getFullYear();
-    const month = date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1;
+    const month =
+      date.getMonth() + 1 < 10
+        ? '0' + (date.getMonth() + 1)
+        : date.getMonth() + 1;
     const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
     this.date.week = `星期${weeks[date.getDay()]}`;
     this.date.completeDate = `${year}-${month}-${day}`;
@@ -76,7 +80,9 @@ export default {
         if (i === 0) {
           remainder === 0 && lastNumbers.push(i);
         }
-        i % 2 === remainder && lastNumbers.push(i);
+        else {
+          i % 2 === remainder && lastNumbers.push(i);
+        }
         i++;
       }
     }
