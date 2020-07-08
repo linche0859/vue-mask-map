@@ -6,12 +6,13 @@ cache: npm
 
 install:
   - npm install # npm ci
-script: npm run build
+script: 
+  - npm run build
 
 deploy:
-provider: pages
-skip_cleanup: true
-github_token: $GITHUB_TOKEN
-local_dir: dist
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist
 on:
   branch: master
