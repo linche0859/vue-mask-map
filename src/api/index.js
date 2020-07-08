@@ -27,7 +27,8 @@ const errorHandler = (status, other) => {
       tip('讀取資料錯誤，請稍後再試');
       break;
     default:
-      console.log(other);
+      tip(other);
+      break;
   }
 };
 
