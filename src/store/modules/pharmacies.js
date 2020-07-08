@@ -13,8 +13,8 @@ export const getters = {
   getAreaPharmacies: (state) => ({ county = '', town = '', address = '' }) => {
     let searchRegex = null;
     // 取代「臺」字為「台」字
-    county = county.replace(/臺/gi, '台');
-    address = address.replace(/臺/gi, '台');
+    // county = county.replace(/臺/gi, '台');
+    // address = address.replace(/臺/gi, '台');
     // 依地區搜尋
     if (!address) {
       // 區域為「全部區域」，則依市搜尋
